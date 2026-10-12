@@ -1,210 +1,220 @@
-const Footer=()=>{
-    return(
-        <>
-        <footer className="p-4 bg-white md:p-8 lg:p-10 dark:bg-gray-800">
-  <div className="mx-auto max-w-screen-xl text-center">
-    <a
-      href="#"
-      className="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
-    >
-      <svg
-        className="mr-2 h-8"
-        viewBox="0 0 33 33"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M25.2696 13.126C25.1955 13.6364 24.8589 14.3299 24.4728 14.9328C23.9856 15.6936 23.2125 16.2264 22.3276 16.4114L18.43 17.2265C17.8035 17.3575 17.2355 17.6853 16.8089 18.1621L14.2533 21.0188C13.773 21.5556 13.4373 21.4276 13.4373 20.7075C13.4315 20.7342 12.1689 23.9903 15.5149 25.9202C16.8005 26.6618 18.6511 26.3953 19.9367 25.6538L26.7486 21.7247C29.2961 20.2553 31.0948 17.7695 31.6926 14.892C31.7163 14.7781 31.7345 14.6639 31.7542 14.5498L25.2696 13.126Z"
-          fill="url(#paint0_linear_11430_22515)"
-        />
-        <path
-          d="M23.5028 9.20133C24.7884 9.94288 25.3137 11.0469 25.3137 12.53C25.3137 12.7313 25.2979 12.9302 25.2694 13.1261L28.0141 14.3051L31.754 14.5499C32.2329 11.7784 31.2944 8.92561 29.612 6.65804C28.3459 4.9516 26.7167 3.47073 24.7581 2.34097C23.167 1.42325 21.5136 0.818599 19.8525 0.486816L17.9861 2.90382L17.3965 5.67918L23.5028 9.20133Z"
-          fill="url(#paint1_linear_11430_22515)"
-        />
-        <path
-          d="M1.5336 11.2352C1.5329 11.2373 1.53483 11.238 1.53556 11.2358C1.67958 10.8038 1.86018 10.3219 2.08564 9.80704C3.26334 7.11765 5.53286 5.32397 8.32492 4.40943C11.117 3.49491 14.1655 3.81547 16.7101 5.28323L17.3965 5.67913L19.8525 0.486761C12.041 -1.07341 4.05728 3.51588 1.54353 11.2051C1.54233 11.2087 1.53796 11.2216 1.5336 11.2352Z"
-          fill="url(#paint2_linear_11430_22515)"
-        />
-        <path
-          d="M19.6699 25.6538C18.3843 26.3953 16.8003 26.3953 15.5147 25.6538C15.3402 25.5531 15.1757 25.4399 15.0201 25.3174L12.7591 26.8719L10.8103 30.0209C12.9733 31.821 15.7821 32.3997 18.589 32.0779C20.7013 31.8357 22.7995 31.1665 24.7582 30.0368C26.3492 29.1191 27.7 27.9909 28.8182 26.7195L27.6563 23.8962L25.7762 22.1316L19.6699 25.6538Z"
-          fill="url(#paint3_linear_11430_22515)"
-        />
-        <path
-          d="M15.0201 25.3175C14.0296 24.5373 13.4371 23.3406 13.4371 22.0588V21.931V11.2558C13.4371 10.6521 13.615 10.5494 14.1384 10.8513C13.3323 10.3864 11.4703 8.79036 9.17118 10.1165C7.88557 10.858 6.8269 12.4949 6.8269 13.978V21.8362C6.8269 24.775 8.34906 27.8406 10.5445 29.7966C10.6313 29.874 10.7212 29.9469 10.8103 30.0211L15.0201 25.3175Z"
-          fill="url(#paint4_linear_11430_22515)"
-        />
-        <path
-          d="M28.6604 5.49565C28.6589 5.49395 28.6573 5.49532 28.6589 5.49703C28.9613 5.83763 29.2888 6.23485 29.6223 6.68734C31.3648 9.05099 32.0158 12.0447 31.4126 14.9176C30.8093 17.7906 29.0071 20.2679 26.4625 21.7357L25.7761 22.1316L28.8181 26.7195C34.0764 20.741 34.09 11.5388 28.6815 5.51929C28.6789 5.51641 28.67 5.50622 28.6604 5.49565Z"
-          fill="url(#paint5_linear_11430_22515)"
-        />
-        <path
-          d="M7.09355 13.978C7.09354 12.4949 7.88551 11.1244 9.17113 10.3829C9.34564 10.2822 9.52601 10.1965 9.71002 10.1231L9.49304 7.38962L7.96861 4.26221C5.32671 5.23364 3.1897 7.24125 2.06528 9.83067C1.2191 11.7793 0.75001 13.9294 0.75 16.1888C0.75 18.0243 1.05255 19.7571 1.59553 21.3603L4.62391 21.7666L7.09355 21.0223V13.978Z"
-          fill="url(#paint6_linear_11430_22515)"
-        />
-        <path
-          d="M9.71016 10.1231C10.8817 9.65623 12.2153 9.74199 13.3264 10.3829L13.4372 10.4468L22.3326 15.5777C22.9566 15.9376 22.8999 16.2918 22.1946 16.4392L22.7078 16.332C23.383 16.1908 23.9999 15.8457 24.4717 15.3428C25.2828 14.4782 25.5806 13.4351 25.5806 12.5299C25.5806 11.0468 24.7886 9.67634 23.503 8.93479L16.6911 5.00568C14.1436 3.53627 11.0895 3.22294 8.29622 4.14442C8.18572 4.18087 8.07756 4.2222 7.96875 4.26221L9.71016 10.1231Z"
-          fill="url(#paint7_linear_11430_22515)"
-        />
-        <path
-          d="M20.0721 31.8357C20.0744 31.8352 20.0739 31.8332 20.0717 31.8337C19.6252 31.925 19.1172 32.0097 18.5581 32.0721C15.638 32.3978 12.7174 31.4643 10.5286 29.5059C8.33986 27.5474 7.09347 24.7495 7.09348 21.814L7.09347 21.0222L1.59546 21.3602C4.1488 28.8989 12.1189 33.5118 20.0411 31.8421C20.0449 31.8413 20.0582 31.8387 20.0721 31.8357Z"
-          fill="url(#paint8_linear_11430_22515)"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_11430_22515"
-            x1="20.8102"
-            y1="23.9532"
-            x2="23.9577"
-            y2="12.9901"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1724C9" />
-            <stop offset={1} stopColor="#1C64F2" />
-          </linearGradient>
-          <linearGradient
-            id="paint1_linear_11430_22515"
-            x1="28.0593"
-            y1="10.5837"
-            x2="19.7797"
-            y2="2.33321"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1C64F2" />
-            <stop offset={1} stopColor="#0092FF" />
-          </linearGradient>
-          <linearGradient
-            id="paint2_linear_11430_22515"
-            x1="16.9145"
-            y1="5.2045"
-            x2="4.42432"
-            y2="5.99375"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#0092FF" />
-            <stop offset={1} stopColor="#45B2FF" />
-          </linearGradient>
-          <linearGradient
-            id="paint3_linear_11430_22515"
-            x1="16.0698"
-            y1="28.846"
-            x2="27.2866"
-            y2="25.8192"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1C64F2" />
-            <stop offset={1} stopColor="#0092FF" />
-          </linearGradient>
-          <linearGradient
-            id="paint4_linear_11430_22515"
-            x1="8.01881"
-            y1="15.8661"
-            x2="15.9825"
-            y2="24.1181"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1724C9" />
-            <stop offset={1} stopColor="#1C64F2" />
-          </linearGradient>
-          <linearGradient
-            id="paint5_linear_11430_22515"
-            x1="26.2004"
-            y1="21.8189"
-            x2="31.7569"
-            y2="10.6178"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#0092FF" />
-            <stop offset={1} stopColor="#45B2FF" />
-          </linearGradient>
-          <linearGradient
-            id="paint6_linear_11430_22515"
-            x1="6.11387"
-            y1="9.31427"
-            x2="3.14054"
-            y2="20.4898"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1C64F2" />
-            <stop offset={1} stopColor="#0092FF" />
-          </linearGradient>
-          <linearGradient
-            id="paint7_linear_11430_22515"
-            x1="21.2932"
-            y1="8.78271"
-            x2="10.4278"
-            y2="11.488"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#1724C9" />
-            <stop offset={1} stopColor="#1C64F2" />
-          </linearGradient>
-          <linearGradient
-            id="paint8_linear_11430_22515"
-            x1="7.15667"
-            y1="21.5399"
-            x2="14.0824"
-            y2="31.9579"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#0092FF" />
-            <stop offset={1} stopColor="#45B2FF" />
-          </linearGradient>
-        </defs>
-      </svg>
-      Flowbite
-    </a>
-    <p className="my-6 text-gray-500 dark:text-gray-400">
-      Open-source library of over 400+ web components and interactive elements
-      built for better web.
-    </p>
-    <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6 ">
-          About
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6">
-          Premium
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6 ">
-          Campaigns
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6">
-          Blog
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6">
-          Affiliate Program
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6">
-          FAQs
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mr-4 hover:underline md:mr-6">
-          Contact
-        </a>
-      </li>
-    </ul>
-    <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-      © 2021-2022{" "}
-      <a href="#" className="hover:underline">
-        Flowbite™
-      </a>
-      . All Rights Reserved.
-    </span>
-  </div>
-</footer>
+import React, { useState } from "react";
+import { useECommerce } from "../context/ECommerceContext";
+import {
+  Zap,
+  Mail,
+  Send,
+  ShieldCheck,
+  CheckCircle2,
+  Lock,
+  ArrowRight
+} from "lucide-react";
 
-        </>
-    )
-}
+const Footer = () => {
+  const { showToast } = useECommerce();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    showToast(`Subscribed! Check ${newsletterEmail} for exclusive tech drops. 🚀`, "success");
+    setNewsletterEmail("");
+  };
+
+  return (
+    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200/80 dark:border-gray-800 transition-colors">
+      {/* Newsletter Signup Banner */}
+      <div className="border-b border-gray-200/80 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-950/40">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="text-center lg:text-left max-w-lg">
+              <span className="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
+                Join The Tech Elite
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1">
+                Subscribe for private drops & flash sales
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Get first dibs on limited hardware batches and member-only coupons directly in your inbox.
+              </p>
+            </div>
+
+            <form
+              onSubmit={handleNewsletterSubmit}
+              className="flex w-full max-w-md gap-2"
+            >
+              <div className="relative flex-1">
+                <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="email"
+                  required
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder="Enter your personal email..."
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="py-3 px-5 rounded-xl bg-primary-600 hover:bg-primary-700 active:scale-[0.98] text-white text-xs font-bold transition-all shadow-md shadow-primary-500/20 shrink-0 flex items-center gap-1.5"
+              >
+                <span>Subscribe</span>
+                <Send className="w-3.5 h-3.5" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Links */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+          {/* Brand Info */}
+          <div className="col-span-2">
+            <a href="#hero" className="flex items-center gap-2.5 mb-4 group">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-primary-500/25">
+                <Zap className="w-4 h-4 fill-white" />
+              </div>
+              <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white">
+                Ref<span className="text-primary-600 dark:text-primary-400">!</span>ex
+              </span>
+            </a>
+
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm mb-4">
+              Ref!ex is an authorized boutique retailer delivering authentic luxury electronics, pro workstations, and acoustic equipment with worldwide express dispatch.
+            </p>
+
+            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+              <span className="flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5 text-emerald-500" />
+                256-Bit SSL Protection
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary-500" />
+                Authenticity Guaranteed
+              </span>
+            </div>
+          </div>
+
+          {/* Quick Category Links */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-4">
+              Shop Tech
+            </h4>
+            <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400">
+              <li>
+                <a href="#products" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Computers & Desktops
+                </a>
+              </li>
+              <li>
+                <a href="#products" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Studio Acoustics
+                </a>
+              </li>
+              <li>
+                <a href="#products" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Smart Wearables
+                </a>
+              </li>
+              <li>
+                <a href="#products" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Flagship Phones
+                </a>
+              </li>
+              <li>
+                <a href="#products" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Custom Keyboards & Mice
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Customer Service */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-4">
+              Support & Help
+            </h4>
+            <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400">
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Track Your Package
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Warranty & Registration
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Returns & Exchanges
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Shipping Rates & Timelines
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Help Desk & Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal & Company */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-4">
+              Company
+            </h4>
+            <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400">
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  About Ref!ex Store
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Sustainability Pledge
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Affiliate Program
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar: Copyright & Payment Icons */}
+        <div className="mt-12 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+          <p>© {new Date().getFullYear()} Ref!ex Store. Engineered for precision performance.</p>
+
+          <div className="flex items-center gap-4 text-[11px] font-semibold text-gray-500 dark:text-gray-400">
+            <span>VISA</span>
+            <span>MASTERCARD</span>
+            <span>APPLE PAY</span>
+            <span>GOOGLE PAY</span>
+            <span>PAYPAL</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
 export default Footer;

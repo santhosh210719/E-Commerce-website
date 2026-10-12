@@ -1,247 +1,245 @@
-export const ProductCart = () => {
+import React, { useMemo } from "react";
+import { useECommerce } from "../context/ECommerceContext";
+import { PRODUCTS, CATEGORIES } from "../data/products";
+import { ProductCard } from "./ProductCard";
+import {
+  SlidersHorizontal,
+  ArrowUpDown,
+  Search,
+  RotateCcw,
+  Sparkles,
+  Zap,
+  Tag
+} from "lucide-react";
+
+export const ProductLayout = () => {
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    priceRange,
+    setPriceRange,
+    onlyInStock,
+    setOnlyInStock,
+    applyPromoCode
+  } = useECommerce();
+
+  // Filter and sort products
+  const filteredProducts = useMemo(() => {
+    return PRODUCTS.filter((item) => {
+      // Category filter
+      if (selectedCategory !== "All" && item.category !== selectedCategory) {
+        return false;
+      }
+      // Search query filter
+      if (searchQuery.trim() !== "") {
+        const query = searchQuery.toLowerCase();
+        const matchesTitle = item.title.toLowerCase().includes(query);
+        const matchesDesc = item.description.toLowerCase().includes(query);
+        const matchesCategory = item.category.toLowerCase().includes(query);
+        if (!matchesTitle && !matchesDesc && !matchesCategory) {
+          return false;
+        }
+      }
+      // Price range filter
+      if (item.price > priceRange) {
+        return false;
+      }
+      // In-stock filter
+      if (onlyInStock && !item.inStock) {
+        return false;
+      }
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === "price-asc") return a.price - b.price;
+      if (sortBy === "price-desc") return b.price - a.price;
+      if (sortBy === "rating") return b.rating - a.rating;
+      return a.id - b.id; // default featured
+    });
+  }, [selectedCategory, searchQuery, sortBy, priceRange, onlyInStock]);
+
+  const resetFilters = () => {
+    setSelectedCategory("All");
+    setSearchQuery("");
+    setSortBy("featured");
+    setPriceRange(4000);
+    setOnlyInStock(false);
+  };
+
   return (
-    <>
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <div className="h-56 w-full">
-          <a href="#">
-            <img
-              className="mx-auto h-full dark:hidden"
-              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-              alt=""
-            />
-            <img
-              className="mx-auto hidden h-full dark:block"
-              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-              alt=""
-            />
-          </a>
+    <section id="products" className="py-12 md:py-16 bg-gray-50/60 dark:bg-gray-950/60 transition-colors">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary-100 dark:bg-primary-950/80 text-primary-700 dark:text-primary-300 mb-2">
+              <Sparkles className="w-3.5 h-3.5" /> Curated Catalog
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+              Featured Flagship Devices
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-xl">
+              Engineered for extreme performance, uncompromised battery life, and sublime aesthetics.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+            <span>Showing <strong className="text-gray-900 dark:text-white">{filteredProducts.length}</strong> of {PRODUCTS.length} devices</span>
+          </div>
         </div>
-        <div className="pt-6">
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <span className="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-              {" "}
-              Up to 35% off{" "}
-            </span>
-            <div className="flex items-center justify-end gap-1">
+
+        {/* Category Pills Navigation */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none mb-6">
+          {CATEGORIES.map((cat) => {
+            const count = cat === "All"
+              ? PRODUCTS.length
+              : PRODUCTS.filter(p => p.category === cat).length;
+            const isSelected = selectedCategory === cat;
+
+            return (
               <button
-                type="button"
-                data-tooltip-target="tooltip-quick-look"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`py-2 px-4 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+                  isSelected
+                    ? "bg-primary-600 text-white shadow-md shadow-primary-500/25 scale-102"
+                    : "bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
               >
-                <span className="sr-only"> Quick look </span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  fill="none"
-                  viewBox="0 0 24 24"
+                <span>{cat}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                    isSelected
+                      ? "bg-white/20 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
+                  }`}
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+                  {count}
+                </span>
               </button>
-              <div
-                id="tooltip-quick-look"
-                role="tooltip"
-                className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                data-popper-placement="top"
+            );
+          })}
+        </div>
+
+        {/* Filter and Sorting Control Bar */}
+        <div className="p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 mb-8 shadow-xs">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {/* Price Range Slider */}
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                Max Price:
+              </span>
+              <input
+                type="range"
+                min="100"
+                max="4000"
+                step="100"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+                className="w-32 sm:w-40 accent-primary-600 cursor-pointer"
+              />
+              <span className="text-xs font-bold text-primary-600 dark:text-primary-400">
+                ${priceRange.toLocaleString()}
+              </span>
+            </div>
+
+            {/* In-Stock Toggle */}
+            <label className="flex items-center gap-2 text-xs font-medium text-gray-700 dark:text-gray-300 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={onlyInStock}
+                onChange={(e) => setOnlyInStock(e.target.checked)}
+                className="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+              />
+              <span>In-stock only</span>
+            </label>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-2">
+              <ArrowUpDown className="w-3.5 h-3.5 text-gray-400" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="py-1.5 px-3 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
               >
-                Quick look
-                <div className="tooltip-arrow" data-popper-arrow="" />
-              </div>
+                <option value="featured">Featured First</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+            </div>
+
+            {/* Reset Filter Button if active */}
+            {(selectedCategory !== "All" || searchQuery !== "" || priceRange < 4000 || onlyInStock) && (
               <button
-                type="button"
-                data-tooltip-target="tooltip-add-to-favorites"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                onClick={resetFilters}
+                className="py-1.5 px-3 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 text-xs font-medium flex items-center gap-1.5 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition-colors"
               >
-                <span className="sr-only"> Add to Favorites </span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                  />
-                </svg>
+                <RotateCcw className="w-3 h-3" />
+                Reset Filters
               </button>
-              <div
-                id="tooltip-add-to-favorites"
-                role="tooltip"
-                className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                data-popper-placement="top"
-              >
-                Add to favorites
-                <div className="tooltip-arrow" data-popper-arrow="" />
-              </div>
-            </div>
+            )}
           </div>
-          <a
-            href="#"
-            className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-          >
-            Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max
-          </a>
-          <div className="mt-2 flex items-center gap-2">
-            <div className="flex items-center">
-              <svg
-                className="h-4 w-4 text-yellow-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-              </svg>
-              <svg
-                className="h-4 w-4 text-yellow-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-              </svg>
-              <svg
-                className="h-4 w-4 text-yellow-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-              </svg>
-              <svg
-                className="h-4 w-4 text-yellow-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-              </svg>
-              <svg
-                className="h-4 w-4 text-yellow-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-              </svg>
+        </div>
+
+        {/* Product Cards Grid */}
+        {filteredProducts.length === 0 ? (
+          <div className="py-16 text-center bg-white dark:bg-gray-900 rounded-3xl border border-gray-200/80 dark:border-gray-800 p-8">
+            <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-4 text-gray-400">
+              <Search className="w-8 h-8" />
             </div>
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
-              5.0
-            </p>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              (455)
-            </p>
-          </div>
-          <ul className="mt-2 flex items-center gap-4">
-            <li className="flex items-center gap-2">
-              <svg
-                className="h-4 w-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                />
-              </svg>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                Fast Delivery
-              </p>
-            </li>
-            <li className="flex items-center gap-2">
-              <svg
-                className="h-4 w-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth={2}
-                  d="M8 7V6c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1h-1M3 18v-7c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                />
-              </svg>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                Best Price
-              </p>
-            </li>
-          </ul>
-          <div className="mt-4 flex items-center justify-between gap-4">
-            <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
-              $1,699
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+              No matching products found
+            </h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-6">
+              We couldn't find any products matching your current filters. Try relaxing your search criteria or resetting filters.
             </p>
             <button
-              type="button"
-              className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              onClick={resetFilters}
+              className="py-2.5 px-6 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold shadow-md shadow-primary-500/20"
             >
-              <svg
-                className="-ms-2 me-2 h-5 w-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
-                />
-              </svg>
-              Add to cart
+              Reset All Filters
             </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+
+        {/* Special Promo Banner */}
+        <div id="deals" className="mt-16 rounded-3xl bg-gradient-to-r from-primary-900 via-indigo-900 to-purple-950 p-8 sm:p-12 text-white relative overflow-hidden shadow-2xl border border-primary-500/20">
+          <div className="absolute right-0 top-0 -bottom-10 w-96 bg-primary-500/10 blur-3xl pointer-events-none" />
+          
+          <div className="relative z-10 max-w-2xl">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 backdrop-blur-md text-amber-300 mb-4">
+              <Zap className="w-3.5 h-3.5 fill-amber-300" /> Exclusive VIP Discount
+            </span>
+            <h3 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-3">
+              Get 20% Off Everything With Code: <span className="text-amber-300 underline decoration-wavy">REFLEX20</span>
+            </h3>
+            <p className="text-sm text-gray-300 mb-6 leading-relaxed">
+              Unlock extraordinary savings across our entire catalogue including Apple M3 Macs, Sony Noise Cancelling acoustics, and Garmin smartwatches. Limited redemptions available.
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => applyPromoCode("REFLEX20")}
+                className="py-3 px-6 rounded-xl bg-white text-gray-900 hover:bg-gray-100 font-bold text-xs shadow-lg transition-all"
+              >
+                Auto-Apply Voucher
+              </button>
+              <span className="text-xs text-gray-400">
+                Applied directly to your cart at checkout.
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </>
-  )
-}
-import car from "../assests/983b26ff33a229b9b6e67f944c3e6f13.jpg"
-
-export const ProductLayout = () => {
-  return (
-    <>
-      <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
-        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-            <ProductCart />
-            <ProductCart />
-            <ProductCart />
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
-
+    </section>
+  );
+};
